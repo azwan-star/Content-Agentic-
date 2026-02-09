@@ -1,0 +1,78 @@
+Here is the refined, linear User Flow for your Facebook-Only Content Engine.
+This flow is designed to feel like a "Magic Button" for Facebook marketing.
+
+🟢 Phase 1: Authentication
+Goal: Secure access with zero friction.
+Open App: User visits the web app URL.
+Login: User enters email address.
+Magic Link: User clicks the link in their email inbox.
+Redirect: User is dropped directly onto the "Creator Studio" (Home) page.
+
+🔵 Phase 2: The "Creator Studio" (Input)
+Goal: Capture the idea and style preference in under 30 seconds.
+Input Topic: User types their raw idea into the main text box.
+Example: "We are offering a 20% discount on all winter coats this weekend."
+
+Select Tone: User clicks a button to define the vibe.
+Selection: "Exciting" (to make it hype).
+
+Select Image Style: User selects a visual style from a dropdown.
+Selection: "3D Illustration".
+
+Action: User clicks the big "Draft Post" button.
+
+Feedback: The button turns into a spinner/loading state: "AI is brainstorming & designing..."
+
+⚫ Phase 3: The "Black Box" (System Processing)
+Goal: Invisible automation (User waits ~45-60 seconds).
+Frontend: Sends data (topic, tone, style, userId) to n8n Workflow A.
+n8n:
+Writes Caption: Uses GPT-4 to write a Facebook-optimized caption based on the Tone.
+Generates Image: Uses DALL-E 3 to create a 3D Illustration based on the Topic.
+Saves: Inserts the text and image URL into the Supabase Database with status ready.
+
+
+Frontend: Receives a "Success" signal or polls the database until the new row appears.
+Transition: Automatically redirects the user to the Review Page.
+
+🔵 Phase 4: The "News Feed" Editor (Review)
+Goal: Make the user feel like they are looking at a real Facebook post before it goes live.
+Visual: User sees a UI card that looks exactly like a Facebook Mobile Post.
+Profile Pic + Name at the top.
+The AI-written text in the middle.
+The AI-generated Image large and center.
+Fake Like/Comment buttons at the bottom (for aesthetics).
+
+
+Review:
+The Text: User notices a typo or wants to add a specific link. They click the text and edit it directly (like a text editor).
+The Image: User sees the 3D illustration. It looks good.
+
+
+Decision:
+Option A: Delete (Trash Icon) - If the AI completely missed the mark.
+Option B: Post to Facebook (Primary Blue Button).
+
+
+
+🟢 Phase 5: Publishing & Confirmation
+Goal: Instant gratification.
+Action: User clicks "Post to Facebook".
+System:
+App sends the specific Draft ID to n8n Workflow B.
+n8n grabs the edited text and the image from the database.
+n8n pushes it to the official Meta Graph API (Facebook Page).
+
+
+Feedback:
+Button shows "Publishing...".
+Button turns Green: "Posted! ✅".
+
+
+End: The card disappears or moves to a "History" tab, and the user is redirected back to the Creator Studio to make another post.
+
+Summary of the Experience
+Total Clicks: ~4 clicks (Type -> Select Tone -> Draft -> Post).
+Total Time: ~2 minutes (including AI generation time).
+User Feeling: "I just hired a professional social media manager who works instantly."
+
